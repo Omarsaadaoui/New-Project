@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3amrouch — Terminal Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #0d0d0d;
+      color: #0f0;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #terminal-container {
+      background: #111;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 800px;
+      padding: 1.5rem;
+      box-shadow: 0 0 20px #0f0;
+      overflow: hidden;
+    }
+    #logo {
+      color: #0f0;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px #0f0;
+    }
+    #terminal {
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+    .prompt {
+      color: #0ff;
+    }
+    input {
+      background: transparent;
+      border: none;
+      color: #0f0;
+      font-family: monospace;
+      font-size: 1rem;
+      outline: none;
+      width: 90%;
+    }
+    .btns {
+      margin: 0.5rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .btns a {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btns a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 10px #0f0;
+    }
+    .instagram { background: linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7); }
+    .facebook { background: #1877f2; }
+    .snapchat { background: #fffc00; color: #000; }
+    .discord { background: #5865f2; }
+    .telegram { background: #0088cc; }
+    .help-box {
+      border: 1px solid #0f0;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+      color: #0f0;
+      background: rgba(0, 255, 0, 0.05);
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal-container">
+    <div id="logo">3amrouch</div>
+    <div id="terminal"></div>
+  </div>
+  <script>
+    const CONFIG = {
+      name: "3amrouch",
+      about: `Hi, I’m Omar Saadaoui 👋 .\n\n🔭 From Kassrrien, I'm 17 years old and currently pursuing a degree in Computer Science. I have a strong passion for programming and problem-solving, eager to tackle real-world challenges and apply my skills in meaningful ways.\n\n👯 I enjoy learning new things and improving my skills. I primarily use NextJS and Tailwind CSS when building my projects. You can explore the projects I've built using the 'project' command. Browse around to find out more about me. *Try using the 'social' command to view my social profiles.`,
+      socials: {
+        instagram: "https://www.instagram.com/omar_saadaoui_officiel?igsh=dGw1a2tvcGVxcXR4",
+        facebook: "https://www.facebook.com/share/16ugM9Ts3T/",
+        snapchat: "https://www.snapchat.com/add/omarsaadaoui_1?share_id=u6k3-1nigWs&locale=en-GB",
+        discord: "https://discord.com/users/862973498783301632",
+        telegram: "https://t.me/omarsaadaoui1"
+      }
+    };
+
+    const terminal = document.getElementById("terminal");
+
+    function print(text = "") {
+      terminal.innerHTML += text + "\n";
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function printButtons() {
+      const div = document.createElement("div");
+      div.classList.add("btns");
+      div.innerHTML = `
+        <a href="${CONFIG.socials.instagram}" target="_blank" class="instagram">Instagram</a>
+        <a href="${CONFIG.socials.facebook}" target="_blank" class="facebook">Facebook</a>
+        <a href="${CONFIG.socials.snapchat}" target="_blank" class="snapchat">Snapchat</a>
+        <a href="${CONFIG.socials.discord}" target="_blank" class="discord">Discord</a>
+        <a href="${CONFIG.socials.telegram}" target="_blank" class="telegram">Telegram</a>
+      `;
+      terminal.appendChild(div);
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function prompt() {
+      const promptLine = document.createElement("div");
+      promptLine.innerHTML = `<span class="prompt">guest@${CONFIG.name}:~$ </span><input type="text" autofocus />`;
+      terminal.appendChild(promptLine);
+      const input = promptLine.querySelector("input");
+      input.focus();
+      input.addEventListener("keydown", async (e) => {
+        if (e.key === "Enter") {
+          const cmd = input.value.trim();
+          input.disabled = true;
+          await handleCommand(cmd);
+          prompt();
+        }
+      });
+    }
+
+    async function handleCommand(cmd) {
+      switch (cmd.toLowerCase()) {
+        case "help":
+          print(`\n--- Available Commands ---`);
+          print(`\n1. about  - Learn more about me`);
+          print(`2. social - View my social profiles`);
+          print(`3. clear  - Clear the terminal\n`);
+          print(`--------------------------\n`);
+          break;
+        case "about":
+          print(CONFIG.about);
+          break;
+        case "social":
+          print("My Social Profiles:");
+          printButtons();
+          break;
+        case "clear":
+          terminal.innerHTML = "";
+          break;
+        default:
+          print(`command not found: ${cmd}`);
+      }
+    }
+
+    function boot() {
+      print("Welcome to 3amrouch's portfolio. Type 'help' to get started.\n");
+      prompt();
+    }
+
+    boot();
+  </script>
+</body>
+</html>
