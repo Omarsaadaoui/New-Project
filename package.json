@@ -1,0 +1,31 @@
+{
+  "name": "instagram-ai-helper",
+  "version": "1.0.0",
+  "description": "AI-powered Instagram automation helper for omar_saadaoui_officiel",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "auto-reply": "node src/auto-reply.js",
+    "generate-content": "node src/content-generator.js",
+    "analytics": "node src/analytics.js",
+    "schedule-post": "node src/scheduler.js"
+  },
+  "keywords": [
+    "instagram",
+    "ai",
+    "automation",
+    "social-media"
+  ],
+  "author": "3amrouch",
+  "license": "MIT",
+  "dependencies": {
+    "instagram-private-api": "^1.45.3",
+    "openai": "^4.20.1",
+    "dotenv": "^16.3.1",
+    "node-cron": "^3.0.3",
+    "axios": "^1.6.2",
+    "sharp": "^0.33.0",
+    "winston": "^3.11.0"
+  }
+}
